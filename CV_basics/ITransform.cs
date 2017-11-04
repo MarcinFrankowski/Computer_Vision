@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+
+namespace CV_basics
+{
+
+    interface ITransform
+    {
+        /// <summary>
+        /// Displays given image in gray, saves in given directory
+        /// </summary>
+        /// <param name="sourceImage">Source image</param>
+        /// <param name="targetDir">Target directory for gray image</param>
+        void ShowInGray(Mat sourceImage, string targetDir);
+
+        void ShowSplitted(Mat sourceImage);
+
+        void Filter1(Mat sourceImage);
+        void Filter2(Mat sourceImage);
+    }
+}
