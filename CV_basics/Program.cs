@@ -22,6 +22,7 @@ namespace CV_basics
             imagesDir = Path.Combine(dir, "images");
 
             Mat image = CvInvoke.Imread(imagesDir + "\\lena.jpg", LoadImageType.AnyColor);
+            
             if (image.IsEmpty)
             {
                 Console.WriteLine("Failed to get image data");
@@ -97,6 +98,20 @@ namespace CV_basics
                             Transform.ZoomOut(image, times);
                             break;
                         }
+                    case 8:
+                        {
+                            int threshold, maxvalue;
+                            Console.Clear();
+                            Console.WriteLine("Enter threshold value (int) \n");
+                            threshold = int.Parse(Console.ReadLine());
+                            Console.Clear();
+                            Console.WriteLine("Enter max value (int) \n");
+                            maxvalue = int.Parse(Console.ReadLine());
+
+
+                            Transform.Threshold(image, threshold, maxvalue);
+                            break;
+                        }
                     default:
                         break;
                 }
@@ -116,6 +131,7 @@ namespace CV_basics
             Console.WriteLine("5. Gaussian Blur");
             Console.WriteLine("6. Zoom In");
             Console.WriteLine("7. Zoom Out");
+            Console.WriteLine("8. Threshold");
             Console.WriteLine("0. Quit");
             var result = Console.ReadLine();
             return Convert.ToInt32(result);

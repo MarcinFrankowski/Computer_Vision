@@ -123,5 +123,37 @@ namespace CV_basics
             CvInvoke.Imshow("Zoom out " + times + "x", dst);
         }
 
+        public void Threshold(Mat sourceImage, int threshold, int maxValue)
+        {
+            var hsv = sourceImage.Clone();
+            var dst = sourceImage.Clone();
+
+            CvInvoke.CvtColor(sourceImage, hsv, ColorConversion.Bgr2Hsv);
+
+            CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("source", sourceImage);
+
+            //CvInvoke.NamedWindow("HSV", NamedWindowType.AutoSize);
+            //CvInvoke.Imshow("HSV", dst);
+            MCvScalar scalar1 = new MCvScalar { V0 = 0, V1 = 100, V2 = 100 };
+            MCvScalar scalar2 = new MCvScalar { V0 = 10, V1 = 255, V2 = 255 };
+
+            var channelH = dst.Split()[0];
+            var channelHGray = channelH.Clone();
+            CvInvoke.InRange(hsv, scalar1, scalar2, dst);
+
+            var thresholded = channelH.Clone();
+
+            //CvInvoke.NamedWindow("split H", NamedWindowType.AutoSize);
+            //CvInvoke.Imshow("split H", splittedImage[0]);
+
+            CvInvoke.Threshold(channelH, thresholded, threshold, maxValue, ThresholdType.BinaryInv);
+
+            CvInvoke.NamedWindow("Threshold", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("Threshold", thresholded);
+
+
+        }
+
     }
 }

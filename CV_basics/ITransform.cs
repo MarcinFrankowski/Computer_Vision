@@ -26,5 +26,6 @@ namespace CV_basics
         void GaussianBlur(Mat sourceImage, int kernelSize);
         void ZoomIn(Mat sourceImage, int times);
         void ZoomOut(Mat sourceImage, int times);
+        void Threshold(Mat sourceImage, int threshold, int maxValue);
     }
 }
