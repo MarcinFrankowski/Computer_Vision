@@ -63,8 +63,9 @@ namespace CV_basics
                         {
                             int ksize = 1;
                             Console.Clear();
-                            Console.WriteLine("Enter kernel size (must be positive and odd) \n");
+                            Console.WriteLine(" Enter kernel size (must be positive and odd) \n kernel size = 1 or 3 gives best result for noise filtering \n");
                             ksize = int.Parse(Console.ReadLine());
+
                             if ((ksize < 1) || (ksize % 2 == 0))
                             {
                                 Console.WriteLine("Invalid kernel size");
@@ -72,7 +73,28 @@ namespace CV_basics
                                 Console.ReadKey();
                                 break;
                             }
+
                             Transform.GaussianBlur(image, ksize);
+                            break;
+                        }
+                    case 6:
+                        {
+                            int times = 1;
+                            Console.Clear();
+                            Console.WriteLine("Enter zoomIn (int value) \n");
+                            times = int.Parse(Console.ReadLine());
+
+                            Transform.ZoomIn(image,times);
+                            break;
+                        }
+                    case 7:
+                        {
+                            int times = 1;
+                            Console.Clear();
+                            Console.WriteLine("Enter zoomOut (int value) \n");
+                            times = int.Parse(Console.ReadLine());
+
+                            Transform.ZoomOut(image, times);
                             break;
                         }
                     default:
@@ -92,6 +114,8 @@ namespace CV_basics
             Console.WriteLine("3. Blur");
             Console.WriteLine("4. Sharpen");
             Console.WriteLine("5. Gaussian Blur");
+            Console.WriteLine("6. Zoom In");
+            Console.WriteLine("7. Zoom Out");
             Console.WriteLine("0. Quit");
             var result = Console.ReadLine();
             return Convert.ToInt32(result);

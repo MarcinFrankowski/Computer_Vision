@@ -88,5 +88,40 @@ namespace CV_basics
             CvInvoke.Imshow("GaussianBlur", dst);
         }
 
+        public void ZoomIn(Mat sourceImage, int times)
+        {
+            var dst = sourceImage.Clone();
+            var tmp = sourceImage.Clone();
+
+            for (int i = 1; i < times; i++)
+            {
+                CvInvoke.PyrUp(tmp, dst);
+                tmp = dst;
+            }            
+
+            CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("source", sourceImage);
+
+            CvInvoke.NamedWindow("Zoom in " + times + "x", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("Zoom in " + times + "x", dst);
+        }
+        public void ZoomOut(Mat sourceImage, int times)
+        {
+            var dst = sourceImage.Clone();
+            var tmp = sourceImage.Clone();
+
+            for (int i = 1; i < times; i++)
+            {
+                CvInvoke.PyrDown(tmp, dst);
+                tmp = dst;
+            }
+
+            CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("source", sourceImage);
+
+            CvInvoke.NamedWindow("Zoom out " + times + "x", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("Zoom out " + times + "x", dst);
+        }
+
     }
 }

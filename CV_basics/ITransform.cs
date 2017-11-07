@@ -24,5 +24,7 @@ namespace CV_basics
         void Blur(Mat sourceImage);
         void Sharpen(Mat sourceImage);
         void GaussianBlur(Mat sourceImage, int kernelSize);
+        void ZoomIn(Mat sourceImage, int times);
+        void ZoomOut(Mat sourceImage, int times);
     }
 }
