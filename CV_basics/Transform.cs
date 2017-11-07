@@ -41,7 +41,7 @@ namespace CV_basics
             }
         }
 
-        public void Filter1(Mat sourceImage)
+        public void Blur(Mat sourceImage)
         {
             Matrix<float> kernel = new Matrix<float>(new float[3, 3] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } });
             kernel = kernel / 9;
@@ -54,11 +54,11 @@ namespace CV_basics
             CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
             CvInvoke.Imshow("source", sourceImage);
 
-            CvInvoke.NamedWindow("dst", NamedWindowType.AutoSize);
-            CvInvoke.Imshow("dst", dst);
+            CvInvoke.NamedWindow("smooth", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("smooth", dst);
         }
 
-        public void Filter2(Mat sourceImage)
+        public void Sharpen(Mat sourceImage)
         {
             Matrix<float> kernel = new Matrix<float>(new float[3, 3] { { 1, 1, 1 }, { 1, 9, 1 }, { 1, 1, 1 } });
             kernel = kernel / 9;
@@ -70,8 +70,22 @@ namespace CV_basics
             CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
             CvInvoke.Imshow("source", sourceImage);
 
-            CvInvoke.NamedWindow("dst", NamedWindowType.AutoSize);
-            CvInvoke.Imshow("dst", dst);
+            CvInvoke.NamedWindow("sharp", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("sharp", dst);
+        }
+
+        public void GaussianBlur(Mat sourceImage, int kernelSize)
+        {
+            var dst = sourceImage.Clone();
+
+            Size ksize = new Size { Height = kernelSize, Width = kernelSize };
+            CvInvoke.GaussianBlur(sourceImage, dst, ksize,5);
+            
+            CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("source", sourceImage);
+
+            CvInvoke.NamedWindow("GaussianBlur", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("GaussianBlur", dst);
         }
 
     }

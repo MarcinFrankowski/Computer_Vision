@@ -21,7 +21,8 @@ namespace CV_basics
 
         void ShowSplitted(Mat sourceImage);
 
-        void Filter1(Mat sourceImage);
-        void Filter2(Mat sourceImage);
+        void Blur(Mat sourceImage);
+        void Sharpen(Mat sourceImage);
+        void GaussianBlur(Mat sourceImage, int kernelSize);
     }
 }
