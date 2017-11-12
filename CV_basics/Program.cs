@@ -100,16 +100,27 @@ namespace CV_basics
                         }
                     case 8:
                         {
-                            int threshold, maxvalue;
+                            int threshold;
                             Console.Clear();
                             Console.WriteLine("Enter threshold value (int) \n");
                             threshold = int.Parse(Console.ReadLine());
+
+
+                            Transform.Threshold(image, threshold);
+                            break;
+                        }
+                    case 9:
+                        {
+                            int rotate, zoom;
                             Console.Clear();
-                            Console.WriteLine("Enter max value (int) \n");
-                            maxvalue = int.Parse(Console.ReadLine());
+                            Console.WriteLine("Enter rotate value (int, angles, clockwise rotation) \n");
+                            rotate = int.Parse(Console.ReadLine());
+                            Console.Clear();
+                            Console.WriteLine("Enter zoom value (positive for zoom in, negative for zoom out) \n");
+                            zoom = int.Parse(Console.ReadLine());
 
 
-                            Transform.Threshold(image, threshold, maxvalue);
+                            Transform.RotateZoomGray(image, rotate, zoom);
                             break;
                         }
                     default:
@@ -132,6 +143,7 @@ namespace CV_basics
             Console.WriteLine("6. Zoom In");
             Console.WriteLine("7. Zoom Out");
             Console.WriteLine("8. Threshold");
+            Console.WriteLine("9. Rotate, zoom, to gray");
             Console.WriteLine("0. Quit");
             var result = Console.ReadLine();
             return Convert.ToInt32(result);

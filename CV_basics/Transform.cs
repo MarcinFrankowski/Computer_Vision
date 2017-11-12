@@ -123,36 +123,69 @@ namespace CV_basics
             CvInvoke.Imshow("Zoom out " + times + "x", dst);
         }
 
-        public void Threshold(Mat sourceImage, int threshold, int maxValue)
+        public void Threshold(Mat sourceImage, int threshold)
         {
             var hsv = sourceImage.Clone();
-            var dst = sourceImage.Clone();
+            
+
+            Hsv lowerLimit1 = new Hsv(0, 50, 50);
+            Hsv upperLimit1 = new Hsv(20, 255, 255);
+            Hsv lowerLimit2 = new Hsv(160, 50, 50);
+            Hsv upperLimit2 = new Hsv(180, 255, 255);
 
             CvInvoke.CvtColor(sourceImage, hsv, ColorConversion.Bgr2Hsv);
 
+            Image<Hsv, Byte> imageHSV = hsv.ToImage<Hsv, byte>();
+            var mask1 = imageHSV.InRange(lowerLimit1, upperLimit1);
+            var mask2 = imageHSV.InRange(lowerLimit2, upperLimit2);
+            var mask = mask1 + mask2;
+            var imageHSVRed = imageHSV.Clone().Split()[0];
+            CvInvoke.BitwiseAnd(mask, imageHSV.Split()[0], imageHSVRed);
+
+
+            CvInvoke.NamedWindow("red", NamedWindowType.AutoSize);
+            CvInvoke.Imshow("red", imageHSVRed);
+
             CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
             CvInvoke.Imshow("source", sourceImage);
-
-            //CvInvoke.NamedWindow("HSV", NamedWindowType.AutoSize);
-            //CvInvoke.Imshow("HSV", dst);
-            MCvScalar scalar1 = new MCvScalar { V0 = 0, V1 = 100, V2 = 100 };
-            MCvScalar scalar2 = new MCvScalar { V0 = 10, V1 = 255, V2 = 255 };
-
-            var channelH = dst.Split()[0];
-            var channelHGray = channelH.Clone();
-            CvInvoke.InRange(hsv, scalar1, scalar2, dst);
+                      
+            var channelH = imageHSVRed.Split()[0];
 
             var thresholded = channelH.Clone();
 
-            //CvInvoke.NamedWindow("split H", NamedWindowType.AutoSize);
-            //CvInvoke.Imshow("split H", splittedImage[0]);
-
-            CvInvoke.Threshold(channelH, thresholded, threshold, maxValue, ThresholdType.BinaryInv);
+            CvInvoke.Threshold(channelH, thresholded, threshold, 255, ThresholdType.Binary);
 
             CvInvoke.NamedWindow("Threshold", NamedWindowType.AutoSize);
             CvInvoke.Imshow("Threshold", thresholded);
 
+        }
 
+        public void RotateZoomGray(Mat sourceImage, int rotate, int zoom)
+        {
+            Image<Gray, Byte> srcImage = sourceImage.ToImage<Gray, byte>();
+            var rotatedImage = srcImage.Rotate((double)rotate, new Gray(255));
+
+            var dst = rotatedImage.Clone();
+            var tmp = rotatedImage.Clone();
+
+            for (int i = 1; i < Math.Abs(zoom); i++)
+            {
+                if (zoom > 0)
+                {
+                    CvInvoke.PyrUp(tmp, dst);
+                }
+                else
+                {
+                    CvInvoke.PyrDown(tmp, dst);
+                }
+                tmp = dst;
+            }
+
+            CvInvoke.NamedWindow("source", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Rotated, zoomed, gray", NamedWindowType.AutoSize);
+
+            CvInvoke.Imshow("source", sourceImage);
+            CvInvoke.Imshow("Rotated, zoomed, gray", dst);
         }
 
     }
