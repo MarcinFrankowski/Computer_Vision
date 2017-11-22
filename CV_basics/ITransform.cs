@@ -72,5 +72,23 @@ namespace CV_basics
         /// <param name="rotate">Angles to rotate</param>
         /// <param name="zoom">Zoom value (positive zoom in, negative zoom out)</param>
         void RotateZoomGray(Mat sourceImage, int rotate, int zoom);
+
+        /// <summary>
+        /// Displays example of erosion operation
+        /// </summary>
+        /// <param name="sourceImage">Source image</param>
+        void Erosion(Image<Bgr, Byte> sourceImage);
+
+        /// <summary>
+        /// Displays example of dilation operation
+        /// </summary>
+        /// <param name="sourceImage">Source image</param>
+        void Dilation(Image<Bgr, Byte> sourceImage);
+
+        /// <summary>
+        /// Displays example of histogram equalization
+        /// </summary>
+        /// <param name="sourceImage">Source image</param>
+        void NormHist(Image<Bgr, Byte> sourceImage);
     }
 }

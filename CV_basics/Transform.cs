@@ -188,5 +188,74 @@ namespace CV_basics
             CvInvoke.Imshow("Rotated, zoomed, gray", dst);
         }
 
+        public void Erosion(Image<Bgr, Byte> sourceImage)
+        {
+            var crossImg = sourceImage.Clone();
+            var rectImg = sourceImage.Clone();
+            var elipseImg = sourceImage.Clone();
+            var cross = CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(3, 3), new Point(-1, -1));
+            var rect = CvInvoke.GetStructuringElement(ElementShape.Ellipse, new Size(3, 3), new Point(-1, -1));
+            var elipse = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(3, 3), new Point(-1, -1));
+
+            CvInvoke.Erode(sourceImage, crossImg, cross, new Point(-1, -1), 1, BorderType.Reflect, default(MCvScalar));
+            CvInvoke.Erode(sourceImage, rectImg, rect, new Point(-1, -1), 1, BorderType.Reflect, default(MCvScalar));
+            CvInvoke.Erode(sourceImage, elipseImg, elipse, new Point(-1, -1), 1, BorderType.Reflect, default(MCvScalar));
+
+            CvInvoke.NamedWindow("Source", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Erosion - kernel shape: CROSS", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Erosion - kernel shape: RECTANGLE", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Erosion - kernel shape: ELIPSE", NamedWindowType.AutoSize);
+
+            CvInvoke.Imshow("Source", sourceImage);
+            CvInvoke.Imshow("Erosion - kernel shape: CROSS", crossImg);
+            CvInvoke.Imshow("Erosion - kernel shape: RECTANGLE", rectImg);
+            CvInvoke.Imshow("Erosion - kernel shape: ELIPSE", elipseImg);
+        }
+
+
+        public void Dilation(Image<Bgr, Byte> sourceImage)
+        {
+            var crossImg = sourceImage.Clone();
+            var rectImg = sourceImage.Clone();
+            var elipseImg = sourceImage.Clone();
+            var cross = CvInvoke.GetStructuringElement(ElementShape.Cross, new Size(3, 3), new Point(-1, -1));
+            var rect = CvInvoke.GetStructuringElement(ElementShape.Ellipse, new Size(3, 3), new Point(-1, -1));
+            var elipse = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(3, 3), new Point(-1, -1));
+
+            CvInvoke.Dilate(sourceImage, crossImg, cross, new Point(-1, -1), 1, BorderType.Reflect, default(MCvScalar));
+            CvInvoke.Dilate(sourceImage, rectImg, rect, new Point(-1, -1), 1, BorderType.Reflect, default(MCvScalar));
+            CvInvoke.Dilate(sourceImage, elipseImg, elipse, new Point(-1, -1), 1, BorderType.Reflect, default(MCvScalar));
+
+            CvInvoke.NamedWindow("Source", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Erosion - kernel shape: CROSS", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Erosion - kernel shape: RECTANGLE", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Erosion - kernel shape: ELIPSE", NamedWindowType.AutoSize);
+
+            CvInvoke.Imshow("Source", sourceImage);
+            CvInvoke.Imshow("Erosion - kernel shape: CROSS", crossImg);
+            CvInvoke.Imshow("Erosion - kernel shape: RECTANGLE", rectImg);
+            CvInvoke.Imshow("Erosion - kernel shape: ELIPSE", elipseImg);
+        }
+
+        public void NormHist(Image<Bgr, Byte> sourceImage)
+        {
+            // EmguCV library does not contain "cvNormalizeHist" and "cvThreshHist" methods of OpenCV library
+            // Only .EqualizeHist is available
+
+            Image<Gray, Byte> grayImage = new Image<Gray, Byte>(sourceImage.Width, sourceImage.Height);
+            CvInvoke.CvtColor(sourceImage, grayImage, ColorConversion.Bgr2Gray);
+
+            var equalizedImg = grayImage.Clone();
+
+            CvInvoke.EqualizeHist(grayImage, equalizedImg);
+
+            CvInvoke.NamedWindow("Source", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Source in gray", NamedWindowType.AutoSize);
+            CvInvoke.NamedWindow("Equalized histogram", NamedWindowType.AutoSize);
+
+            CvInvoke.Imshow("Source", sourceImage);
+            CvInvoke.Imshow("Source in gray", grayImage);
+            CvInvoke.Imshow("Equalized histogram", equalizedImg);
+        }
     }
 }

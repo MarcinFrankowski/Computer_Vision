@@ -123,6 +123,43 @@ namespace CV_basics
                             Transform.RotateZoomGray(image, rotate, zoom);
                             break;
                         }
+                    case 10:
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Choose operator");
+                            Console.WriteLine();
+                            Console.WriteLine("1. Erosion");
+                            Console.WriteLine("2. Dilatation");
+                            int operation;
+                            operation = int.Parse(Console.ReadLine());
+                            Console.Clear();
+
+                            Image<Bgr, Byte> testImage = new Image<Bgr, Byte>(imagesDir + "\\test1.jpg");
+                            ///var testImage = CvInvoke.Imread(imagesDir + "\\test1.jpg", LoadImageType.AnyColor);
+                            switch (operation)
+                            {
+                                case 1:
+                                    Transform.Erosion(testImage);
+                                    break;
+
+                                case 2:
+                                    Transform.Dilation(testImage);
+                                    break;
+
+                                default:
+                                    break;
+
+                            }
+
+                            break;
+                        }
+                    case 11:
+                        {
+                            Image<Bgr, Byte> testImage = new Image<Bgr, Byte>(imagesDir + "\\test1.jpg");
+                            Transform.NormHist(testImage);
+                            break;
+                        }
+
                     default:
                         break;
                 }
@@ -144,6 +181,8 @@ namespace CV_basics
             Console.WriteLine("7. Zoom Out");
             Console.WriteLine("8. Threshold");
             Console.WriteLine("9. Rotate, zoom, to gray");
+            Console.WriteLine("10. Morphology operators");
+            Console.WriteLine("11. Equalized histogram");
             Console.WriteLine("0. Quit");
             var result = Console.ReadLine();
             return Convert.ToInt32(result);
